@@ -141,8 +141,12 @@ function Peoplemayknow() {
                     slidesPerView={3}
                     spaceBetween={30}
                     breakpoints={{
-                        640: {
+                        250: {
                             slidesPerView: 1,
+                            spaceBetween: 20,
+                        },
+                        640: {
+                            slidesPerView: 2,
                             spaceBetween: 20,
                         },
                         768: {
