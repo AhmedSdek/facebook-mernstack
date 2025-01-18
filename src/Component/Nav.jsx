@@ -290,7 +290,10 @@ function Nav() {
                                         <MenuItem onClick={() => nav('/profile')}>
                                             <Typography sx={{ textAlign: 'center' }}>My Profile</Typography>
                                         </MenuItem>
-                                        <MenuItem onClick={() => nav('/chat')}>
+                                        <MenuItem onClick={() => {
+                                            handleCloseUserMenu();
+                                            nav('/chat')
+                                        }}>
                                             <Typography sx={{ textAlign: 'center' }}>Chat</Typography>
                                         </MenuItem>
                                         <MenuItem onClick={handelLogout}>
