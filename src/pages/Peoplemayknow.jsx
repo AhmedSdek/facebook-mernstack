@@ -136,7 +136,7 @@ function Peoplemayknow() {
             <Typography>
                 Peoplemayknow
             </Typography>
-            <Box sx={{ height: '300px' }}>
+            <Box sx={{ height: '250px' }}>
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={30}
