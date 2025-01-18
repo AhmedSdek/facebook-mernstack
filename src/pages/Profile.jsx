@@ -98,11 +98,11 @@ function Profile() {
                             Frind List
                         </Typography>
                         <Stack sx={{ justifyContent: 'center', alignItems: 'center', gap: 1, width: '100%', flexDirection: 'row', margin: '10px 0' }}>
-                            {friends &&
+                            {friends && 
                                 friends.map((frind) => {
                                     // console.log(frind)
                                     return (
-                                        <Card key={frind._id} sx={{ width: 200 }}>
+                                        <Card key={frind._id} sx={{ width: "100%" }}>
                                             <CardActionArea sx={{ display: 'flex', flexDirection: 'column' }}>
                                                 <Box sx={{ height: '100px' }}>
                                                     <CardMedia

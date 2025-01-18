@@ -64,7 +64,7 @@ const PostList = () => {
                 allPosts.map((post) => {
                     // console.log(post)
                     return (
-                        <Card key={post._id} sx={{ width: 300 }}>
+                        <Card key={post._id} sx={{ width: "100%" }}>
                             <CardHeader
                                 avatar={
                                     <Avatar sx={{ bgcolor: red[500] }} src={post.createdBy.profilePicture} aria-label="recipe" />
