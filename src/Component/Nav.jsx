@@ -287,7 +287,10 @@ function Nav() {
                                         open={Boolean(anchorElUser)}
                                         onClose={handleCloseUserMenu}
                                     >
-                                        <MenuItem onClick={() => nav('/profile')}>
+                                        <MenuItem onClick={() => {
+                                            handleCloseUserMenu();
+                                            nav('/profile')
+                                        }}>
                                             <Typography sx={{ textAlign: 'center' }}>My Profile</Typography>
                                         </MenuItem>
                                         <MenuItem onClick={() => {
