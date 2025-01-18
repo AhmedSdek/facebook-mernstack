@@ -16,9 +16,6 @@ function Profile() {
     const token = localStorage.getItem('token'); // جلب التوكن المخزن
     const user = useSelector((state) => state.user);
     const [friends, setFriends] = useState([]);
-    // console.log(friends)
-
-    // console.log(user.user)
     const nav = useNavigate()
     useEffect(() => {
         if (!user.isAuthenticated) {

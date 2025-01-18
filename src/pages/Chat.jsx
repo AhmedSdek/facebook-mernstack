@@ -15,33 +15,9 @@ function Chat() {
     const [selectedFriend, setSelectedFriend] = useState(null);
     const [content, setContent] = useState('');
     const [messages, setMessages] = useState([]);
-    console.log(messages)
     const [newMessage, setNewMessage] = useState('');
     const [unreadMessages, setUnreadMessages] = useState({}); // لتتبع الرسائل غير المقروءة
     const messagesEndRef = useRef(null); // مرجع نهاية الرسائل
-    // useEffect(() => {
-    //     if (!user.isAuthenticated) {
-    //         nav("/login");
-    //     } else {
-    //         socket.on("receiveMessage", (message) => {
-    //             if (
-    //                 selectedFriend &&
-    //                 ((message.sender === selectedFriend._id &&
-    //                     message.receiver === user.user._id) ||
-    //                     (message.sender === user.user._id &&
-    //                         message.receiver === selectedFriend._id))
-    //             ) {
-    //                 setMessages((prev) => [...prev, message]);
-    //             }
-    //         });
-    //     }
-
-    //     return () => {
-    //         socket.off("receiveMessage");
-    //     };
-    // }, [user, selectedFriend]);
-    // جلب الرسائل القديمة عند تحميل الصفحة
-
     useEffect(() => {
         if (!user.isAuthenticated) {
             nav("/login");
@@ -62,7 +38,6 @@ function Chat() {
                     }));
                 }
             });
-
         }
         return () => {
             socket.off("receiveMessage");

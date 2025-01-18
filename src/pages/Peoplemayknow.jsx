@@ -27,7 +27,6 @@ function Peoplemayknow() {
         const fetchData = async () => {
             try {
                 const userId = user._id; // جلب معرف المستخدم الحالي
-                // socket.emit('register', userId);
                 const response = await fetch(`${BASE_URL}/auth/all-users?userId=${userId}`); // تمرير معرف المستخدم
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -44,7 +43,6 @@ function Peoplemayknow() {
     useEffect(() => {
         // استقبال طلبات الصداقة
         socket.on('friendRequestAccepted', (data) => {
-            console.log(data);
             dispatch(updateUser(data.data.data.friend));
         });
         // Cleanup function: إلغاء الاشتراك عندما يتغير الـ user أو عند إلغاء الاشتراك
@@ -55,7 +53,6 @@ function Peoplemayknow() {
     useEffect(() => {
         // استقبال طلبات الصداقة
         socket.on('friendRequestRejected', (data) => {
-            console.log(data);
             dispatch(updateUser(data.data.data.friend));
         });
         // Cleanup function: إلغاء الاشتراك عندما يتغير الـ user أو عند إلغاء الاشتراك

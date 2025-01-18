@@ -17,42 +17,7 @@ import { setUser, updateUser } from './redux/userSlice'
 
 function App() {
   const user = useSelector((state) => state.user);
-  const token = localStorage.getItem('token');
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const getMyData = async () => {
-  //     try {
-  //       const res = await fetch(`${BASE_URL}/auth/my-user`, {
-  //         method: 'GET',
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "Authorization": `Bearer ${token}`,
-  //         }
-  //       });
-  //       if (!res.ok) {
-  //         // const data = await res.json();
-  //         console.log('err')
-  //         // setErr(token.message)
-  //         return;
-  //       }
-  //       const data = await res.json();
-  //       console.log(data)
-  //       if (!token) {
-  //         // setErr('Incorrect token')
-  //         console.log("err")
-  //       }
-  //       dispatch(updateUser(data));
-  //       // window.location.href = '/'
-  //       // nav('/')
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  //   }
-  //   if (user.isAuthenticated) {
-  //     getMyData();
-  //   }
-  // }, []);
   useEffect(() => {
     if (user.isAuthenticated) {
       socket.emit('registerUser', user.user._id);

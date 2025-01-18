@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import CreatPost from '../Component/CreatPost';
 import PostList from '../Component/PostList';
 import Peoplemayknow from './Peoplemayknow';
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:3000');
 function Home() {
     const user = useSelector((state) => state.user);
     // console.log(user)
@@ -24,7 +22,6 @@ function Home() {
                     <CreatPost />
                     <Peoplemayknow />
                     <PostList />
-
                 </Stack>
             </Container>
         )

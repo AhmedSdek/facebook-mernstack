@@ -56,7 +56,7 @@ function Regester() {
                                 setErr('Incorrect token')
                             }
                             setBtn(false);
-                            console.log(token)
+                            // console.log(token)
                             // register(token);
                             nav('/verfy')
                         }}
