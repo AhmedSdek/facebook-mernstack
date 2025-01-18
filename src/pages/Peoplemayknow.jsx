@@ -152,7 +152,7 @@ function Peoplemayknow() {
                             // console.log(item)
                             return (
                                 <SwiperSlide key={item._id}>
-                                    <Card sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                                    <Card sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                                         <Stack sx={{ flexDirection: 'row', alignItems: 'center', padding: '10px' }}>
                                             <Box sx={{ width: '50px', height: '50px' }}>
                                                 <CardMedia
