@@ -22,6 +22,7 @@ function Chat() {
         if (!user.isAuthenticated) {
             nav("/login");
         } else {
+            socket.emit('registerUser', user.user._id);
             // استقبال الرسالة المؤكدة من السيرفر (للمرسل فقط)
             socket.on("messageSent", (message) => {
                 setMessages((prev) => [...prev, message]); // تحديث الرسائل في واجهة المرسل
@@ -74,7 +75,6 @@ function Chat() {
         }
     }, [messages]); // يتم التمرير عند تحديث الرسائل
     const [open, setOpen] = React.useState(false);
-
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };

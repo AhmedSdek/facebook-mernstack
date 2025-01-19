@@ -13,9 +13,9 @@ import 'swiper/css/pagination';
 import './styles.css';
 
 // import required modules
-import { FreeMode, Pagination } from 'swiper/modules';
+import { FreeMode } from 'swiper/modules';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, updateFriendRequests, updateFriendsList, updateSentRequests, updateUser } from '../redux/userSlice';
+import { updateSentRequests, updateUser } from '../redux/userSlice';
 import socket from '../Component/conestans/socket';
 function Peoplemayknow() {
     const user = useSelector((state) => state.user.user); // الحصول على بيانات المستخدم
@@ -88,9 +88,6 @@ function Peoplemayknow() {
             console.log('Error adding friend', err);
         }
     };
-    // const isFriend = (friend) => {
-    //     return user.friends.includes(friend._id) // تحقق إذا كنت قد أرسلت طلب صداقة
-    // };
     // // دالة للتحقق إذا كنت قد أرسلت طلب صداقة
     const isRequestSent = (friend) => {
         return user.sentRequests.includes(friend._id); // تحقق إذا كنت قد أرسلت طلب صداقة
@@ -102,13 +99,6 @@ function Peoplemayknow() {
     const isFriend = (friend) => {
         return user.friends.some((f) => f._id === friend._id); // تحقق إذا كان الصديق موجودًا في قائمة الأصدقاء
     };
-    // const isRequestSent = (friend) => {
-    //     return user.sentRequests.some((req) => req._id === friend._id); // تحقق إذا كان طلب الصداقة قد أُرسل
-    // };
-    // const isRequest = (friend) => {
-    //     return user.friendRequests.some((req) => req._id === friend._id); // تحقق إذا كان الصديق قد أرسل لك طلب صداقة
-    // };
-    // console.log(user.friendRequests)
     // الحصول على النص واللون بناءً على حالة الطلب
     const getButtonText = (friend) => {
         if (isRequest(friend)) {
@@ -159,10 +149,7 @@ function Peoplemayknow() {
                         },
                     }}
                     freeMode={true}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
+                    modules={[FreeMode]}
                     className="mySwiper"
                 >
                     {data &&
