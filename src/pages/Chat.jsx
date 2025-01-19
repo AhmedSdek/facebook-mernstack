@@ -18,31 +18,55 @@ function Chat() {
     const [newMessage, setNewMessage] = useState('');
     const [unreadMessages, setUnreadMessages] = useState({}); // لتتبع الرسائل غير المقروءة
     const messagesEndRef = useRef(null); // مرجع نهاية الرسائل
+    // useEffect(() => {
+    //     if (!user.isAuthenticated) {
+    //         nav("/login");
+    //     } else {
+    //         socket.on("receiveMessage", (message) => {
+    //             if (
+    //                 (message.sender === selectedFriend?._id &&
+    //                     message.receiver === user.user._id) ||
+    //                 (message.sender === user.user._id &&
+    //                     message.receiver === selectedFriend?._id)
+    //             ) {
+    //                 setMessages((prev) => [...prev, message]);
+    //             } else if (message.receiver === user.user._id) {
+    //                 // إذا كانت الرسالة من صديق والشات غير مفتوح
+    //                 setUnreadMessages((prev) => ({
+    //                     ...prev,
+    //                     [message.sender]: (prev[message.sender] || 0) + 1,
+    //                 }));
+    //             }
+    //         });
+    //     }
+    //     return () => {
+    //         socket.off("receiveMessage");
+    //     };
+    // }, [user, selectedFriend]);
+
+
+
     useEffect(() => {
         if (!user.isAuthenticated) {
             nav("/login");
         } else {
+            // استقبال الرسالة المؤكدة من السيرفر (للمرسل فقط)
+            socket.on("messageSent", (message) => {
+                setMessages((prev) => [...prev, message]); // تحديث الرسائل في واجهة المرسل
+            });
+
+            // استقبال الرسائل الجديدة
             socket.on("receiveMessage", (message) => {
-                if (
-                    (message.sender === selectedFriend?._id &&
-                        message.receiver === user.user._id) ||
-                    (message.sender === user.user._id &&
-                        message.receiver === selectedFriend?._id)
-                ) {
-                    setMessages((prev) => [...prev, message]);
-                } else if (message.receiver === user.user._id) {
-                    // إذا كانت الرسالة من صديق والشات غير مفتوح
-                    setUnreadMessages((prev) => ({
-                        ...prev,
-                        [message.sender]: (prev[message.sender] || 0) + 1,
-                    }));
-                }
+                setMessages((prev) => [...prev, message]);
             });
         }
         return () => {
-            socket.off("receiveMessage");
+            socket.off("receiveMessage");// قطع الاتصال عند إغلاق الصفحة
+            socket.off("messageSent");
         };
-    }, [user, selectedFriend]);
+    }, [user]);
+
+
     const handelFrindClick = async (frind) => {
         setSelectedFriend(frind);
         // إزالة العلامة عند فتح الشات
@@ -61,31 +85,43 @@ function Chat() {
             console.error("Error fetching messages:", err.message);
         }
     }
-    const handleSendMessage = async () => {
-        if (!content.trim()) return;
+    // const handleSendMessage = async () => {
+    //     if (!content.trim()) return;
 
+    //     const messageData = {
+    //         sender: user.user._id,
+    //         receiver: selectedFriend._id,
+    //         content,
+    //     };
+
+    //     try {
+    //         const response = await fetch(`${BASE_URL}/chat/send-message`, {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify(messageData),
+    //         });
+
+    //         if (response.ok) {
+    //             const savedMessage = await response.json();
+    //             setMessages((prev) => [...prev, savedMessage]); // تحديث الرسائل محليًا
+    //             socket.emit("sendMessage", savedMessage); // إرسال الرسالة للطرف الآخر
+    //             setContent(""); // مسح النص
+    //         }
+    //     } catch (err) {
+    //         console.error("Error sending message:", err.message);
+    //     }
+    // };
+
+    const handleSendMessage = () => {
+        if (!content.trim()) return;
         const messageData = {
             sender: user.user._id,
             receiver: selectedFriend._id,
             content,
         };
-
-        try {
-            const response = await fetch(`${BASE_URL}/chat/send-message`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(messageData),
-            });
-
-            if (response.ok) {
-                const savedMessage = await response.json();
-                setMessages((prev) => [...prev, savedMessage]); // تحديث الرسائل محليًا
-                socket.emit("sendMessage", savedMessage); // إرسال الرسالة للطرف الآخر
-                setContent(""); // مسح النص
-            }
-        } catch (err) {
-            console.error("Error sending message:", err.message);
-        }
+        // إرسال الرسالة عبر السوكيت فقط
+        socket.emit("sendMessage", messageData);
+        setContent(""); // مسح النص
     };
     useEffect(() => {
         if (messagesEndRef.current) {
