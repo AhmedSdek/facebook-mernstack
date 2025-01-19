@@ -79,7 +79,7 @@ function Chat() {
 
             if (response.ok) {
                 const savedMessage = await response.json();
-               // setMessages((prev) => [...prev, savedMessage]); // تحديث الرسائل محليًا
+               setMessages((prev) => [...prev, savedMessage]); // تحديث الرسائل محليًا
                 socket.emit("sendMessage", savedMessage); // إرسال الرسالة للطرف الآخر
                 setContent(""); // مسح النص
             }
