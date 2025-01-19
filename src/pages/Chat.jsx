@@ -56,7 +56,8 @@ function Chat() {
                 `${BASE_URL}/chat/${user.user._id}/${frind._id}`
             );
             const data = await response.json();
-            setMessages(data);
+    setMessages(() => [...data]);
+            //setMessages(data);
         } catch (err) {
             console.error("Error fetching messages:", err.message);
         }
@@ -79,6 +80,7 @@ function Chat() {
 
             if (response.ok) {
                 const savedMessage = await response.json();
+                
                setMessages((prev) => [...prev, savedMessage]); // تحديث الرسائل محليًا
                 socket.emit("sendMessage", savedMessage); // إرسال الرسالة للطرف الآخر
                 setContent(""); // مسح النص
