@@ -40,7 +40,9 @@ const PostList = () => {
             }
             const data = await response.json();
             // console.log(data)
-            dispatch(setAllPosts(data)); // تخزين البيانات في الـ Redux Store
+            // ترتيب البوستات من الأحدث إلى الأقدم
+            const sortedPosts = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            dispatch(setAllPosts(sortedPosts)); // تخزين البيانات في الـ Redux Store
         } catch (error) {
             dispatch(setError(error.message)); // تخزين رسالة الخطأ في الـ Redux Store
         } finally {
