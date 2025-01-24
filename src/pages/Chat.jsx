@@ -6,7 +6,7 @@ import { Box, Container, Divider, Drawer, IconButton, InputBase, List, Paper, St
 import socket from '../Component/conestans/socket';
 import { Menu, Send } from '@mui/icons-material';
 import { BASE_URL } from '../Component/conestans/baseurl';
-import gif from '../../public/Donts_gif_File.gif'
+import gif from '/Donts_gif_File.gif'
 
 function Chat() {
     const dispatch = useDispatch();

@@ -6,5 +6,9 @@ const socket = io(`https://facebook-backend-production-110d.up.railway.app`, {
     withCredentials: true
 });
 
-// const socket = io(`http://localhost:3000`);
+// const socket = io('http://localhost:3000', {
+//     reconnection: true,        // السماح بإعادة الاتصال تلقائيًا
+//     reconnectionAttempts: 5,  // عدد محاولات إعادة الاتصال
+//     reconnectionDelay: 1000,  // مدة التأخير بين المحاولات
+// });
 export default socket;

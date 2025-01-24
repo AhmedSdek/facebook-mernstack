@@ -92,7 +92,9 @@ function Login() {
                                     }
                                     console.log(token)
                                     dispatch(setUser(token));
-                                    socket.emit('registerUser', token.user._id);
+                                    // socket.emit('registerUser', token.user._id);
+                                    // تسجيل الدخول وانضمام المستخدم لغرفته
+                                    // socket.emit('joinRoom', token.user._id);
                                     window.location.href = '/'
                                     // nav('/')
                                 } catch (err) {

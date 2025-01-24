@@ -38,7 +38,7 @@ const userSlice = createSlice({
             localStorage.setItem('user', JSON.stringify(state.user));
         },
         updateFriendsList: (state, action) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             // التأكد أن `action.payload` هو Array
             const newFriends = Array.isArray(action.payload) ? action.payload : [];
             // التحقق من الأصدقاء الجدد وإضافتهم فقط إذا لم يكونوا موجودين

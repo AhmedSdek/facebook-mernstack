@@ -28,6 +28,7 @@ function Nav() {
     // console.log(newOrdersCount)
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [friendRequests, setFriendRequests] = useState([]);
+    // console.log(friendRequests)
 
     // console.log(friendRequests)
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -45,7 +46,8 @@ function Nav() {
                 socket.off('friendRequestReceived');
             };
         }
-    }, []);// جلب التوكن المخزن
+    }, []);
+    // جلب التوكن المخزن
     useEffect(() => {
         const fetchFriendRequests = async () => {
             try {
@@ -55,9 +57,13 @@ function Nav() {
                     },
                 });
                 const data = await res.json();
-                // console.log(data)
-                setFriendRequests(data.friendRequests); // تخزين طلبات الصداقة
-                // console.log(data.friendRequests)
+                // console.log()
+                if (data.message === "User not found") {
+                    handelLogout()
+                }
+                if (res.ok) {
+                    setFriendRequests(data.friendRequests); // تخزين طلبات الصداقة
+                }
             } catch (err) {
                 console.log(err.message);
             }
@@ -83,6 +89,7 @@ function Nav() {
                 }),
             });
             const data = await response.json();
+            // console.log(data)
             if (data.message === 'Friend request accepted successfully') {
                 // console.log(data)
                 // setFriendRequests(data.data.user.friendRequests);
@@ -118,7 +125,7 @@ function Nav() {
             const data = await response.json();
             if (data.message === 'Friend request rejected successfully') {
                 // تم رفض الطلب بنجاح، يمكن هنا تحديث الواجهة أو حالة الطلبات
-                console.log('Friend request rejected:', data);
+                // console.log('Friend request rejected:', data);
                 // تحديث حالة الأصدقاء أو طلبات الأصدقاء في الـ Redux
                 dispatch(updateUser(data.data.user)); // تأكد من إرسال الكائن الكامل للصديق
             } else {
@@ -163,7 +170,7 @@ function Nav() {
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
-                {friendRequests.map((frind, index) => {
+                {friendRequests.length > 0 && friendRequests.map((frind, index) => {
                     return (
                         <ListItem key={index}>
                             <Paper sx={{ width: '100%', padding: '10px' }}>

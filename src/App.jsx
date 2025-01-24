@@ -17,10 +17,12 @@ import { setUser, updateUser } from './redux/userSlice'
 
 function App() {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   useEffect(() => {
     if (user.isAuthenticated) {
-      socket.emit('registerUser', user.user._id);
+      // تسجيل الدخول وانضمام المستخدم لغرفته
+      socket.emit('joinRoom', user.user._id);
+      // socket.emit('registerUser', user.user._id);
     }
     // تسجيل المستخدم عند الاتصال
   }, [user]);

@@ -43,6 +43,7 @@ function Peoplemayknow() {
     useEffect(() => {
         // استقبال طلبات الصداقة
         socket.on('friendRequestAccepted', (data) => {
+            // console.log(data)
             dispatch(updateUser(data.data.data.friend));
         });
         // Cleanup function: إلغاء الاشتراك عندما يتغير الـ user أو عند إلغاء الاشتراك
