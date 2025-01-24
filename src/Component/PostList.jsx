@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import { setAllPosts, setLoading } from '../redux/postSlice';
 import { BASE_URL } from './conestans/baseurl';
+import moment from 'moment';
 
 const PostList = () => {
     const dispatch = useDispatch();
@@ -64,28 +65,36 @@ const PostList = () => {
                 allPosts.map((post) => {
                     // console.log(post)
                     return (
-                        <Card key={post._id} sx={{ width: "100%" }}>
-                            <CardHeader
-                                avatar={
-                                    <Avatar sx={{ bgcolor: red[500] }} src={post.createdBy.profilePicture} aria-label="recipe" />
-                                }
-                                action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon />
-                                    </IconButton>
-                                }
-                                title={`${post.createdBy.firstName}  ${post.createdBy.lastName}`}
-                                subheader={new Date(post.createdAt).toLocaleString()}
-                            />
+                        <Card key={post._id} sx={{ width: "100%", padding: '12px' }}>
+                            <Stack sx={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
+                                <Avatar sx={{ bgcolor: red[500] }} src={post.createdBy.profilePicture} aria-label="recipe" />
+                                <Stack sx={{ alignItems: 'start' }}>
+                                    <Typography sx={{ fontWeight: 'bold', fontSize: '15px' }}>
+                                        {`${post.createdBy.firstName}  ${post.createdBy.lastName}`}
+                                    </Typography>
+                                    <Typography variant='caption' sx={{ fontSize: '13px' }}>
+                                        {moment(post.createdAt).fromNow()}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                            {post.image &&
                             <CardMedia
                                 component="img"
                                 height="194"
                                 image="/static/images/cards/paella.jpg"
                                 alt="Paella dish"
                             />
-                            <CardContent>
-                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    {post.content}
+                            }
+                            <CardContent sx={{ textAlign: 'start' }}>
+                                <Typography sx={{
+                                    fontSize: '15px',
+                                    color: '#080809',
+                                    fontWeight: 'bold',
+                                    direction: /[\u0600-\u06FF]/.test(post.content) ? 'rtl' : 'ltr',
+                                    textAlign: /[\u0600-\u06FF]/.test(post.content) ? 'right' : 'left',
+                                    whiteSpace: 'pre-wrap',
+                                }}>
+                                    {post.content} 
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing>

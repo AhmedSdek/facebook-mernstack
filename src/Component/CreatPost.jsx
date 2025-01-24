@@ -41,19 +41,19 @@ function CreatPost() {
     };
     return (
         <Paper
-            onSubmit={(e) => handlePost(e)}
             component="form"
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}
         >
             <InputBase
                 value={content}
                 fullWidth
+                multiline
                 onChange={(e) => setContent(e.target.value)}
                 // sx={{ ml: 1, flex: 1 }}
                 placeholder="Post"
                 inputProps={{ 'aria-label': 'Post' }}
             />
-            <Button type='submit' variant='contained'>Post</Button>
+            <Button onClick={(e) => handlePost(e)} variant='contained'>Post</Button>
         </Paper>
     )
 }

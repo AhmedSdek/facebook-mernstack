@@ -30,6 +30,13 @@ function Chat() {
             // استقبال الرسائل الجديدة
             socket.on("receiveMessage", (message) => {
                 setMessages((prev) => [...prev, message]);
+                // تحديث الرسائل غير المقروءة إذا كانت المحادثة غير مفتوحة
+                if (!selectedFriend || selectedFriend._id !== message.sender) {
+                    setUnreadMessages((prev) => ({
+                        ...prev,
+                        [message.sender]: (prev[message.sender] || 0) + 1,
+                    }));
+                }
             });
         }
         return () => {

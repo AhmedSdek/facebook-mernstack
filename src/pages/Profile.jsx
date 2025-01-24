@@ -9,6 +9,16 @@ import Favorite from '@mui/icons-material/Favorite';
 import Share from '@mui/icons-material/Share';
 import { setError, setLoading, setMyPosts } from '../redux/postSlice';
 import { updateFriendsList } from '../redux/userSlice';
+import moment from 'moment';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+
+import './styles.css';
 
 function Profile() {
     const dispatch = useDispatch();
@@ -93,64 +103,131 @@ function Profile() {
                             </Typography>
                         </Stack>
                     </Stack>
-                    <Stack>
+                    <Stack sx={{ marginBottom: '10px' }}>
                         <Typography>
                             Frind List
                         </Typography>
-                        <Stack sx={{ justifyContent: 'center', alignItems: 'center', gap: 1, width: '100%', flexDirection: 'row', margin: '10px 0' }}>
-                            {friends && 
-                                friends.map((frind) => {
-                                    // console.log(frind)
-                                    return (
-                                        <Card key={frind._id} sx={{ width: "100%" }}>
-                                            <CardActionArea sx={{ display: 'flex', flexDirection: 'column' }}>
-                                                <Box sx={{ height: '100px' }}>
-                                                    <CardMedia
-                                                        sx={{ width: '100%', height: '100%' }}
-                                                        component="img"
-                                                        image={frind.profilePicture}
-                                                        alt="green iguana"
-                                                    />
-                                                </Box>
-                                                <CardContent>
-                                                    <Typography gutterBottom variant="h5" component="div">
-                                                        {`${frind.firstName} ${frind.lastName}`}
-                                                    </Typography>
-                                                </CardContent>
-                                            </CardActionArea>
-                                        </Card>
-                                    )
-                                })
-                            }
-                        </Stack>
+                        <Box>
+                            <Swiper
+                                slidesPerView={3}
+                                spaceBetween={30}
+                                breakpoints={{
+                                    250: {
+                                        slidesPerView: 1,
+                                        spaceBetween: 10,
+                                    },
+                                    640: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 10,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                    1024: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                }}
+                                freeMode={true}
+                                // style={{ height: '300px' }}
+                                modules={[FreeMode]}
+                                className="mySwiper"
+                            >
+                                {friends &&
+                                    friends.map((frind) => {
+                                        // console.log(item)
+                                        return (
+                                            <SwiperSlide style={{ height: 'initial' }} key={frind._id}>
+                                                <Card sx={{ width: "100%", height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                    <Stack>
+                                                        <CardMedia
+                                                            sx={{ height: 250 }}
+                                                            image={frind.profilePicture}
+                                                            title="green iguana"
+                                                        />
+                                                        <Box sx={{ padding: '0', margin: 0 }}>
+                                                            <Typography sx={{ margin: '0', fontWeight: 'bold', padding: '0' }} variant="h6" >
+                                                                {`${frind.firstName} ${frind.lastName}`}
+                                                            </Typography>
+                                                        </Box>
+                                                    </Stack>
+                                                </Card>
+                                            </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            </Swiper>
+                        </Box>
                     </Stack>
                     <Stack sx={{ justifyContent: 'center', alignItems: 'center', gap: 1, width: '100%' }}>
                         <CreatPost />
-                        <Stack sx={{ justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+                        <Stack sx={{ justifyContent: 'center', alignItems: 'center', gap: 1, width: '100%' }}>
                             {myPosts.map((post) => {
                                 // console.log(post)
                                 return (
-                                    <Card key={post._id} sx={{ width: 400 }}>
-                                        <CardHeader
-                                            avatar={
-                                                <Avatar sx={{ background: 'red' }} aria-label="recipe" src={post.createdBy.profilePicture} />
-                                            }
-                                            action={
-                                                <IconButton aria-label="settings">
-                                                    <MoreVert />
-                                                </IconButton>
-                                            }
-                                            title={`${post.createdBy.firstName}  ${post.createdBy.lastName}`}
-                                            subheader={new Date(post.createdAt).toLocaleString()}
-                                        />
-                                        <CardMedia
-                                            component="img"
-                                            height="194"
-                                            image="/static/images/cards/paella.jpg"
-                                            alt="Paella dish"
-                                        />
-                                        <CardContent>
-                                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    // <Card key={post._id} sx={{ width: 400 }}>
+                                    //     <CardHeader
+                                    //         avatar={
+                                    //             <Avatar sx={{ background: 'red' }} aria-label="recipe" src={post.createdBy.profilePicture} />
+                                    //         }
+                                    //         action={
+                                    //             <IconButton aria-label="settings">
+                                    //                 <MoreVert />
+                                    //             </IconButton>
+                                    //         }
+                                    //         title={`${post.createdBy.firstName}  ${post.createdBy.lastName}`}
+                                    //         subheader={new Date(post.createdAt).toLocaleString()}
+                                    //     />
+                                    //     <CardMedia
+                                    //         component="img"
+                                    //         height="194"
+                                    //         image="/static/images/cards/paella.jpg"
+                                    //         alt="Paella dish"
+                                    //     />
+                                    //     <CardContent>
+                                    //         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    //             {post.content}
+                                    //         </Typography>
+                                    //     </CardContent>
+                                    //     <CardActions disableSpacing>
+                                    //         <IconButton aria-label="add to favorites">
+                                    //             <Favorite />
+                                    //         </IconButton>
+                                    //         <IconButton aria-label="share">
+                                    //             <Share />
+                                    //         </IconButton>
+                                    //     </CardActions>
+                                    // </Card>
+                                    <Card key={post._id} sx={{ width: "100%", padding: '12px' }}>
+                                        <Stack sx={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
+                                            <Avatar sx={{ bgcolor: "red" }} src={post.createdBy.profilePicture} aria-label="recipe" />
+                                            <Stack sx={{ alignItems: 'start' }}>
+                                                <Typography sx={{ fontWeight: 'bold', fontSize: '15px' }}>
+                                                    {`${post.createdBy.firstName}  ${post.createdBy.lastName}`}
+                                                </Typography>
+                                                <Typography variant='caption' sx={{ fontSize: '13px' }}>
+                                                    {moment(post.createdAt).fromNow()}
+                                                </Typography>
+                                            </Stack>
+                                        </Stack>
+                                        {post.image &&
+                                            <CardMedia
+                                                component="img"
+                                                height="194"
+                                                image="/static/images/cards/paella.jpg"
+                                                alt="Paella dish"
+                                            />
+                                        }
+                                        <CardContent sx={{ textAlign: 'start' }}>
+                                            <Typography sx={{
+                                                fontSize: '15px',
+                                                color: '#080809',
+                                                fontWeight: 'bold',
+                                                direction: /[\u0600-\u06FF]/.test(post.content) ? 'rtl' : 'ltr',
+                                                textAlign: /[\u0600-\u06FF]/.test(post.content) ? 'right' : 'left',
+                                                whiteSpace: 'pre-wrap',
+                                            }}>
                                                 {post.content}
                                             </Typography>
                                         </CardContent>

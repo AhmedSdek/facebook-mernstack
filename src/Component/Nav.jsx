@@ -170,6 +170,9 @@ function Nav() {
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
+                <Typography sx={{ fontWeight: 'bold', padding: '10px' }}>
+                    Notifications
+                </Typography>
                 {friendRequests.length > 0 && friendRequests.map((frind, index) => {
                     return (
                         <ListItem key={index}>

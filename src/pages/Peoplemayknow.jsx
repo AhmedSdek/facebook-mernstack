@@ -123,33 +123,34 @@ function Peoplemayknow() {
     //     }
     // };
     return (
-        <Stack>
-            <Typography>
+        <Stack sx={{ padding: '10px', gap: 2 }}>
+            <Typography sx={{ textAlign: 'start' }}>
                 Peoplemayknow
             </Typography>
-            <Box sx={{ height: '200px' }}>
+            <Box>
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={30}
                     breakpoints={{
                         250: {
-                            slidesPerView: 1,
-                            spaceBetween: 20,
+                            slidesPerView: 2,
+                            spaceBetween: 10,
                         },
                         640: {
                             slidesPerView: 2,
-                            spaceBetween: 20,
+                            spaceBetween: 10,
                         },
                         768: {
                             slidesPerView: 3,
-                            spaceBetween: 40,
+                            spaceBetween: 10,
                         },
                         1024: {
                             slidesPerView: 3,
-                            spaceBetween: 50,
+                            spaceBetween: 10,
                         },
                     }}
                     freeMode={true}
+                    // style={{ height: '300px' }}
                     modules={[FreeMode]}
                     className="mySwiper"
                 >
@@ -157,22 +158,20 @@ function Peoplemayknow() {
                         data.map((item) => {
                             // console.log(item)
                             return (
-                                <SwiperSlide key={item._id}>
-                                    <Card sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
-                                        <Stack sx={{ flexDirection: 'row', alignItems: 'center', padding: '10px' }}>
-                                            <Box sx={{ width: '50px', height: '50px' }}>
-                                                <CardMedia
-                                                    component="img"
-                                                    alt="green iguana"
-                                                    sx={{ height: '50px', width: '50px', borderRadius: '50%' }}
-                                                    image={item.profilePicture}
-                                                />
-                                            </Box>
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="div">
+                                <SwiperSlide style={{ height: 'initial' }} key={item._id}>
+                                    <Card sx={{ width: "100%", height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                        <Stack>
+                                            <CardMedia
+                                                component="div"
+                                                sx={{ height: 250 }}
+                                                image={`${item.profilePicture}`}
+                                                title={`${item.firstName} ${item.lastName}`}
+                                            />
+                                            <Box sx={{ padding: '0', margin: 0 }}>
+                                                <Typography sx={{ margin: '0', fontWeight: 'bold', padding: '0' }} variant="h6" >
                                                     {`${item.firstName} ${item.lastName}`}
                                                 </Typography>
-                                            </CardContent>
+                                            </Box>
                                         </Stack>
                                         <CardActions>
                                             <Button
@@ -183,16 +182,6 @@ function Peoplemayknow() {
                                                 variant="contained"
                                                 disabled={isRequestSent(item) || isFriend(item) || isRequest(item)} // تعيين التعطيل بناءً على الحالة
                                             >
-                                                {/* {isRequest(item)
-                                                    ?
-                                                    "frind send req"
-                                                    :
-                                                    isFriend(item)
-                                                        ? 'Friend'
-                                                        : isRequestSent(item)
-                                                            ? 'Request Sent'
-                                                            : 'Add Friend'
-                                                } */}
                                                 {getButtonText(item)}
                                             </Button>
                                         </CardActions>
